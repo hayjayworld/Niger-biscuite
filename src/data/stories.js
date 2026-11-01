@@ -39,7 +39,7 @@ export const stories = [
     excerpt:
       'A look at the processes that turn ingredients into everyday biscuits. Placeholder story.',
     image:
-      'https://images.unsplash.com/photo-1565960938037-2d0c8b1b4d6a?w=1600&q=80&auto=format&fit=crop',
+      'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793525785/factory.webp',
     body: [
       'Placeholder editorial body about manufacturing. Replace with verified reporting and approved photography.',
     ],

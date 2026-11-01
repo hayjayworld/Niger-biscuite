@@ -3,13 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn, X } from 'lucide-react';
 import { EASE } from '../../lib/motion.js';
 
-export default function ProductGallery({ images, alt }) {
-  const [index, setIndex] = useState(0);
+export default function ProductGallery({ images, initialIndex = 0, alt }) {
+  const [index, setIndex] = useState(initialIndex);
   const [zoom, setZoom] = useState(false);
   const touchStartX = useRef(null);
   const thumbsRef = useRef(null);
 
   const go = (dir) => {
+    if (!images?.length) return;
     setIndex((i) => (i + dir + images.length) % images.length);
   };
 
@@ -41,22 +42,16 @@ export default function ProductGallery({ images, alt }) {
       <div className="space-y-4">
         {/* Main */}
         <div
-          className="relative aspect-square rounded-2xl overflow-hidden bg-cream-100 border border-ink/10 group"
+          className="relative flex aspect-square items-center justify-center rounded-2xl overflow-hidden bg-cream-100 border border-ink/10 group"
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={index}
-              src={images[index]}
-              alt={`${alt} — view ${index + 1}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.35, ease: EASE }}
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          </AnimatePresence>
+          <img
+            key={images[index]}
+            src={images[index]}
+            alt={`${alt} — view ${index + 1}`}
+            className="max-h-full max-w-full object-contain"
+          />
 
           {/* Zoom button */}
           <button
@@ -116,7 +111,7 @@ export default function ProductGallery({ images, alt }) {
                 onClick={() => setIndex(i)}
                 aria-label={`Show image ${i + 1}`}
                 aria-current={i === index}
-                className={`shrink-0 h-20 w-20 sm:h-24 sm:w-24 rounded-xl overflow-hidden border-2 transition-colors ${
+                className={`shrink-0 flex h-20 w-20 items-center justify-center rounded-xl overflow-hidden border-2 bg-cream-100 transition-colors sm:h-24 sm:w-24 ${
                   i === index ? 'border-ink' : 'border-transparent hover:border-ink/20'
                 }`}
               >
@@ -124,7 +119,7 @@ export default function ProductGallery({ images, alt }) {
                   src={img}
                   alt=""
                   loading="lazy"
-                  className="h-full w-full object-cover"
+                  className="max-h-full max-w-full object-contain"
                 />
               </button>
             ))}

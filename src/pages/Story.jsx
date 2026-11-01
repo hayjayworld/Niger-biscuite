@@ -44,7 +44,7 @@ export default function Story() {
 
         <div className="container-x mt-14 md:mt-20">
           <ImageReveal
-            src="https://images.unsplash.com/photo-1556745753-b2904692b3cd?w=2000&q=80&auto=format&fit=crop"
+            src="https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793525757/oxford-cabin.webp"
             alt="Archival-inspired composition of biscuits"
             ratio="21/9"
             className="rounded-3xl"

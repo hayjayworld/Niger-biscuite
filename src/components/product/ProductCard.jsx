@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { EASE } from '../../lib/motion.js';
+import { getProductBrandNames } from '../../data/products.js';
 
 export default function ProductCard({ product, index = 0 }) {
+  const brandNames = getProductBrandNames(product);
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
@@ -15,17 +17,17 @@ export default function ProductCard({ product, index = 0 }) {
         to={`/products/${product.slug}`}
         className="group relative flex flex-col h-full rounded-2xl bg-cream-100 border border-ink/10 overflow-hidden transition-colors duration-500 hover:bg-cream-200/60 hover:border-ink/20"
       >
-        <div className="relative aspect-square overflow-hidden">
+        <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-cream-200">
           <img
-  src={product.images[0]}
-  alt={product.name}
-  loading="lazy"
-  onError={(e) => { e.currentTarget.style.display = 'none'; }}
-  className="h-full w-full object-cover transition-transform duration-[900ms] ease-out-expo group-hover:scale-[1.06] bg-cream-200"
-/>
+            src={product.images[0]}
+            alt={product.name}
+            loading="lazy"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            className="max-h-full max-w-full object-contain"
+          />
           <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cream-50/90 backdrop-blur text-[10px] uppercase tracking-[0.16em] text-ink-700">
             <span className="h-1 w-1 rounded-full bg-gold" />
-            {product.brand}
+            {brandNames.join(' · ')}
           </div>
         </div>
 

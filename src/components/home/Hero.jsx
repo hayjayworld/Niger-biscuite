@@ -112,7 +112,7 @@ export default function Hero() {
                 className="absolute inset-0 rounded-[2rem] overflow-hidden shadow-lift"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=1200&q=80&auto=format&fit=crop"
+                  src="https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793525757/oxford-cabin.webp"
                   alt="A product composition of biscuits"
                   className="h-full w-full object-cover"
                   fetchpriority="high"
@@ -129,7 +129,7 @@ export default function Hero() {
                 className="absolute -left-4 sm:-left-8 top-10 w-28 sm:w-36 aspect-square rounded-full overflow-hidden ring-8 ring-cream-50 shadow-lift"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=400&q=80&auto=format&fit=crop"
+                  src="https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793537878/brand-oxford-prince-cabin-red.png"
                   alt=""
                   className="h-full w-full object-cover"
                 />

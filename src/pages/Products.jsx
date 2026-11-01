@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { PackageOpen } from 'lucide-react';
 import { useSEO } from '../lib/seo.js';
-import { products } from '../data/products.js';
+import { products, getProductBrandNames, productHasBrand } from '../data/products.js';
 import PageHeader from '../components/PageHeader.jsx';
 import ProductFilters from '../components/product/ProductFilters.jsx';
 import ProductGrid from '../components/product/ProductGrid.jsx';
@@ -37,13 +37,13 @@ export default function Products() {
   const filtered = useMemo(() => {
     let list = [...products];
     if (category !== 'All') list = list.filter((p) => p.category === category);
-    if (brand !== 'All') list = list.filter((p) => p.brandSlug === brand);
+    if (brand !== 'All') list = list.filter((product) => productHasBrand(product, brand));
     if (query.trim()) {
       const q = query.toLowerCase();
       list = list.filter(
         (p) =>
           p.name.toLowerCase().includes(q) ||
-          p.brand.toLowerCase().includes(q) ||
+          getProductBrandNames(p).some((name) => name.toLowerCase().includes(q)) ||
           p.category.toLowerCase().includes(q) ||
           p.description.toLowerCase().includes(q)
       );

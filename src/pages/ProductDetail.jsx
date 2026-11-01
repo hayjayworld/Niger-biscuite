@@ -1,9 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Store, Building2 } from 'lucide-react';
 import { useSEO } from '../lib/seo.js';
-import { getProductBySlug, getRelatedProducts } from '../data/products.js';
+import {
+  getProductBySlug,
+  getProductBrandNames,
+  getProductBrandSlugs,
+  getRelatedProducts,
+  getVariantImages,
+} from '../data/products.js';
 import ProductGallery from '../components/product/ProductGallery.jsx';
 import ProductTabs from '../components/product/ProductTabs.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
@@ -16,9 +22,15 @@ export default function ProductDetail() {
   const { slug } = useParams();
   const product = getProductBySlug(slug);
   const [variant, setVariant] = useState(0);
+  const productBrandNames = getProductBrandNames(product);
+  const productBrandSlugs = getProductBrandSlugs(product);
+
+  useEffect(() => {
+    setVariant(0);
+  }, [slug]);
 
   useSEO({
-    title: product ? `${product.name} — ${product.brand} | Niger Biscuit` : 'Product not found',
+    title: product ? `${product.name} — ${productBrandNames.join(', ')} | Niger Biscuit` : 'Product not found',
     description: product?.description,
     canonical: `/products/${slug}`,
   });
@@ -38,6 +50,8 @@ export default function ProductDetail() {
 
   const related = getRelatedProducts(product, 4);
   const specs = product.specifications;
+  const variantImages = getVariantImages(product, variant);
+  const selectedImageIndex = Math.max(0, product.images.indexOf(variantImages[0]));
 
   return (
     <>
@@ -56,7 +70,12 @@ export default function ProductDetail() {
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
           {/* Gallery */}
           <div className="lg:col-span-7">
-            <ProductGallery images={product.images} alt={product.name} />
+            <ProductGallery
+              key={`${slug}-${variant}`}
+              images={product.images}
+              initialIndex={selectedImageIndex}
+              alt={product.name}
+            />
           </div>
 
           {/* Info */}
@@ -67,13 +86,18 @@ export default function ProductDetail() {
             className="lg:col-span-5 lg:sticky lg:top-24 lg:self-start"
           >
             <motion.div variants={fadeUp}>
-              <Link
-                to={`/brands/${product.brandSlug}`}
-                className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-ink-500 hover:text-ink transition"
-              >
-                <span className="h-1 w-1 rounded-full bg-gold" />
-                {product.brand}
-              </Link>
+              <div className="flex flex-wrap gap-x-4 gap-y-2">
+                {productBrandSlugs.map((brandSlug, index) => (
+                  <Link
+                    key={brandSlug}
+                    to={`/brands/${brandSlug}`}
+                    className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-ink-500 hover:text-ink transition"
+                  >
+                    <span className="h-1 w-1 rounded-full bg-gold" />
+                    {productBrandNames[index] ?? brandSlug}
+                  </Link>
+                ))}
+              </div>
             </motion.div>
 
             <motion.h1 variants={fadeUp} className="mt-3 font-display text-display-sm text-balance">
@@ -160,7 +184,7 @@ export default function ProductDetail() {
         <div className="container-x py-20 md:py-28 grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           <div className="lg:col-span-6">
             <ImageReveal
-              src={product.images[1] || product.images[0]}
+              src={variantImages[0] || product.images[0]}
               alt={`${product.name} lifestyle`}
               ratio="4/3"
               className="rounded-2xl"
@@ -183,9 +207,11 @@ export default function ProductDetail() {
               brand narrative.
             </motion.p>
             <motion.div variants={fadeUp} className="mt-6 flex gap-6 text-sm">
-              <Link to={`/brands/${product.brandSlug}`} className="link-underline">
-                Explore {product.brand} →
-              </Link>
+              {productBrandSlugs.map((brandSlug, index) => (
+                <Link key={brandSlug} to={`/brands/${brandSlug}`} className="link-underline">
+                  Explore {productBrandNames[index] ?? brandSlug} →
+                </Link>
+              ))}
             </motion.div>
           </motion.div>
         </div>

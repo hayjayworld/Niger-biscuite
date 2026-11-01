@@ -37,7 +37,7 @@ export default function Heritage() {
 
         <div className="lg:col-span-7 space-y-6">
           <ImageReveal
-            src="https://images.unsplash.com/photo-1565960938037-2d0c8b1b4d6a?w=1600&q=80&auto=format&fit=crop"
+            src="https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793525775/factory-interior.webp"
             alt="Interior of a biscuit production facility"
             ratio="16/10"
             className="rounded-2xl"

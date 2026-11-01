@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useSEO } from '../lib/seo.js';
 import { getBrandBySlug, brands } from '../data/brands.js';
-import { products } from '../data/products.js';
+import { products, productHasBrand } from '../data/products.js';
 import EmptyState from '../components/feedback/EmptyState.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
 import { fadeUp, stagger } from '../lib/motion.js';
@@ -32,7 +32,7 @@ export default function BrandDetail() {
     );
   }
 
-  const brandProducts = products.filter((p) => p.brandSlug === brand.slug);
+  const brandProducts = products.filter((product) => productHasBrand(product, brand.slug));
   const otherBrands = brands.filter((b) => b.slug !== brand.slug).slice(0, 2);
 
   return (
@@ -85,13 +85,31 @@ export default function BrandDetail() {
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-6 relative aspect-[5/4] rounded-3xl overflow-hidden shadow-lift"
+              className="lg:col-span-6 relative mx-auto aspect-[4/5] w-full max-w-[560px]"
             >
-              <img
-                src={brand.heroImage}
-                alt={`${brand.name} product composition`}
-                className="h-full w-full object-cover"
-              />
+              <div className="absolute inset-0 overflow-hidden rounded-[2rem] shadow-lift">
+                <img
+                  src={brand.heroImage}
+                  alt={`${brand.name} product range`}
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/35 via-transparent to-transparent" />
+              </div>
+              <div
+                className="absolute -left-4 top-10 flex aspect-square w-28 items-center justify-center overflow-hidden rounded-full bg-cream-50 p-4 shadow-lift ring-8 ring-cream-50 sm:-left-8 sm:w-36"
+                aria-label={`${brand.name} logo`}
+              >
+                {brand.logo ? (
+                  <img src={brand.logo} alt={`${brand.name} logo`} className="max-h-full max-w-full object-contain" />
+                ) : (
+                  <span className="font-display text-center text-sm text-ink sm:text-base">{brand.name}</span>
+                )}
+              </div>
+              <div className="absolute -right-3 bottom-8 w-[200px] rounded-2xl bg-cream-50 p-4 shadow-lift sm:-right-6 sm:bottom-14 sm:w-[230px] sm:p-5">
+                <div className="text-[10px] uppercase tracking-[0.22em] text-ink-500">Brand range</div>
+                <div className="mt-1.5 font-display text-lg leading-tight">{brand.name}</div>
+                <div className="mt-1 text-xs text-ink-600">{brand.categories.slice(0, 2).join(' · ')}</div>
+              </div>
             </motion.div>
           </div>
         </div>
