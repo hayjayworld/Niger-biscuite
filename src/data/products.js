@@ -2,8 +2,6 @@
 // Each product carries a `verified` flag. All fields with null or
 // [CONFIRM ...] values must be reviewed before launch.
 
-import { image } from "framer-motion/client";
-
 export const categories = [
   'All',
   'Biscuits',
@@ -20,7 +18,7 @@ export const categories = [
   'Other',
 ];
 
-export const products = [
+const productCatalog = [
   {
     slug: 'oxford-cabin-red',
     brand: 'Oxford',
@@ -622,7 +620,36 @@ export const products = [
   // },
 ];
 
+const productLogoBySlug = {
+  'oxford-cabin-red': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793537878/brand-oxford-cabin-red.png',
+  'oxford-cabin-extra': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793537878/brand-oxford-cabin-extra.png',
+  'Oxford-Prince-Cabin-Extra': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793537878/brand-oxford-prince-cabin-extra.png',
+  'Oxford-Prince-Cabin': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793537878/brand-oxford-prince-cabin-red.png',
+  'CarryGo': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793537878/brand-carry-go.png',
+  'Jenka': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793530254/jenka-brand.png',
+  'jet': null,
+  'gogo-double-bubble': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793542016/brand-gogo-double-bubble.png',
+  'Chocoaster-Biscuits': null,
+  'Oxford-Hookup': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793537878/brand-oxford-cabin-red.png',
+  'Prince-Coaster': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793540105/brand-prince-cream.png',
+  'yummies-range': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793543746/brand-yummies.png',
+  'Sesamix': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793530254/sesamix-brand.png',
+  'Prince-Cream-Crackers': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793540105/brand-prince-cream.png',
+  'Oxford-Cream-Crackers': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793537878/brand-oxford-cabin-red.png',
+  'Prince-Rich-Tea': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793540105/brand-prince-cream.png',
+  'Cheese-Ball': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793547003/brand-cheese-balls.png',
+  'Master-Chef': 'https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793530727/master-chef-brand.png',
+  'digestive-fibre-active': null,
+};
+
+export const products = productCatalog.map((product) => ({
+  ...product,
+  brandLogo: productLogoBySlug[product.slug] ?? null,
+}));
+
 export const getProductBySlug = (slug) => products.find((p) => p.slug === slug);
+
+export const getProductBrandLogo = (product) => product?.brandLogo ?? null;
 
 export const getProductBrandSlugs = (product) => {
   if (!product) return [];

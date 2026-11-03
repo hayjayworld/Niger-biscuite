@@ -6,6 +6,7 @@ import { useSEO } from '../lib/seo.js';
 import {
   getProductBySlug,
   getProductBrandNames,
+  getProductBrandLogo,
   getProductBrandSlugs,
   getRelatedProducts,
   getVariantImages,
@@ -75,6 +76,8 @@ export default function ProductDetail() {
               images={product.images}
               initialIndex={selectedImageIndex}
               alt={product.name}
+              brandLogo={getProductBrandLogo(product)}
+              brandName={product.name}
             />
           </div>
 

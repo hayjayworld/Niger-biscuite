@@ -129,7 +129,7 @@ export default function Hero() {
                 className="absolute -left-4 sm:-left-8 top-10 w-28 sm:w-36 aspect-square rounded-full overflow-hidden ring-8 ring-cream-50 shadow-lift"
               >
                 <img
-                  src="https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793537878/brand-oxford-prince-cabin-red.png"
+                  src="https://res.cloudinary.com/dxkz3lwwv/image/upload/v1793664787/images.png"
                   alt=""
                   className="h-full w-full object-cover"
                 />

@@ -29,6 +29,17 @@ export default function ProductCard({ product, index = 0 }) {
             <span className="h-1 w-1 rounded-full bg-gold" />
             {brandNames.join(' · ')}
           </div>
+          <div
+            className="absolute right-3 top-3 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-[5px] border-cream-100 bg-cream-50 p-1 shadow-soft sm:h-16 sm:w-16"
+            aria-label={`${product.name} brand logo`}
+            title={`${product.name} brand logo`}
+          >
+            {product.brandLogo ? (
+              <img src={product.brandLogo} alt={`${product.name} logo`} className="max-h-full max-w-full object-contain" />
+            ) : (
+              <span className="font-display text-center text-[10px] leading-tight text-ink">{product.name}</span>
+            )}
+          </div>
         </div>
 
         <div className="flex-1 p-4 sm:p-5 flex flex-col">

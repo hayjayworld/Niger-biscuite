@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn, X } from 'lucide-react';
 import { EASE } from '../../lib/motion.js';
 
-export default function ProductGallery({ images, initialIndex = 0, alt }) {
+export default function ProductGallery({ images, initialIndex = 0, alt, brandLogo, brandName }) {
   const [index, setIndex] = useState(initialIndex);
   const [zoom, setZoom] = useState(false);
   const touchStartX = useRef(null);
@@ -52,6 +52,18 @@ export default function ProductGallery({ images, initialIndex = 0, alt }) {
             alt={`${alt} — view ${index + 1}`}
             className="max-h-full max-w-full object-contain"
           />
+
+          <div
+            className="absolute left-4 top-4 z-10 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-[6px] border-cream-100 bg-cream-50 p-1.5 shadow-soft sm:left-5 sm:top-5 sm:h-20 sm:w-20"
+            aria-label={`${brandName} logo`}
+            title={`${brandName} logo`}
+          >
+            {brandLogo ? (
+              <img src={brandLogo} alt={`${brandName} logo`} className="max-h-full max-w-full object-contain" />
+            ) : (
+              <span className="font-display text-center text-xs leading-tight text-ink">{brandName}</span>
+            )}
+          </div>
 
           {/* Zoom button */}
           <button
